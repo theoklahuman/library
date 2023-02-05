@@ -1,79 +1,88 @@
-let myLibrary = [];
 const form = document.querySelector("form");
-const formSubmitButton = document.querySelector("#form-submit__button");
-const displayContainer = document.querySelector(".display-container");
-const newBookButton = document.querySelector(".new-book__button");
-let bookName = document.getElementById("book-title");
-let bookAuthor = document.getElementById("book-author");
-let bookPages = document.getElementById("book-pages");
-let bookRead = document.getElementById("book-read");
-let title = bookName.value;
-let author = bookAuthor.value;
-let pages = bookPages.value;
-let read = bookRead.value;
+const bookName = document.getElementById("book-title");
+const bookAuthor = document.getElementById("book-author");
+const bookPages = document.getElementById("book-pages");
+const bookRead = form.elements["book-read"];
+const addNewBookButton = document.getElementById("newbook-start-add");
+const inputsContainer = document.getElementById("inputs-container");
+const backdrop = document.getElementById("backdrop");
+const formCancelButton = document.getElementById("form-cancel-button");
+const formSubmitButton = document.getElementById("form-submit__button");
+const libraryDisplayList = document.body.lastElementChild;
+const nonRadioInputs = inputsContainer.querySelectorAll(
+  ".non-radio-inputs input"
+);
+let myLibrary = [];
 let newBook;
 
-function toggleForm() {
-  if (form.style.display === "block") {
-    form.style.display = "none";
-  } else {
-    form.style.display = "block";
+const toggleBackdrop = function () {
+  backdrop.classList.toggle("visible");
+};
+
+const hideDefaultDisplay = () => {
+  const defaultDisplay = document.querySelector(".library-display__default");
+  defaultDisplay.classList.add("invisible");
+};
+
+const toggleInputsContainer = function () {
+  inputsContainer.classList.toggle("visible");
+  toggleBackdrop();
+  clearFormInputs();
+};
+
+function clearFormInputs() {
+  for (const input of nonRadioInputs) {
+    input.value = "";
   }
 }
 
-newBookButton.addEventListener("click", toggleForm);
+addNewBookButton.addEventListener("click", toggleInputsContainer);
+backdrop.addEventListener("click", toggleInputsContainer);
+formCancelButton.addEventListener("click", toggleInputsContainer);
 
-const Book = (title, author, pages, read) => {
+function Book(title, author, pages, read) {
   const info = () => {
-    return `"${title}" by "${author}", ${pages} pages, ${read}`;
+    return `${title} by ${author}, ${pages} pages, ${read}`;
   };
-  return {title, author, pages, read, info};
-};
+  return {
+    title,
+    author,
+    pages,
+    read,
+    info,
+  };
+}
 
 function makeBook() {
-  newBook = Book(title, author, pages, read);
-  return newBook;
+  const bookTitleValue = bookName.value;
+  const bookPagesValue = bookPages.value;
+  const bookAuthorValue = bookAuthor.value;
+  const bookReadValue = bookRead.value;
+  newBook = Book(
+    bookTitleValue,
+    bookAuthorValue,
+    bookPagesValue,
+    bookReadValue
+  );
 }
 
-function getUserInput() {
-  title = bookName.value;
-  author = bookAuthor.value;
-  pages = bookPages.value;
-  read = bookRead.value;
-}
-
-function addBookToLibrary(book) {
-  myLibrary.push(book.info());
-}
-
-function updateLibrary(event) {
-  getUserInput();
-  makeBook();
-  addBookToLibrary(newBook);
-  displayBookInLibrary();
-  toggleForm();
-  event.preventDefault();
-}
-
-function addRemoveButton() {
-  let removeButton = document.createElement("button");
-  let removeButtonText = document.createTextNode("Remove");
-  removeButton.appendChild(removeButtonText);
-  displayContainer.appendChild(removeButton);
-}
-
-function printBookDetails() {
-  let bookEntry;
-  bookEntry = myLibrary[myLibrary.length - 1];
-  const newBookEntry = document.createElement("h5");
-  const node = document.createTextNode(bookEntry);
-  newBookEntry.appendChild(node);
-  displayContainer.appendChild(newBookEntry);
+function addBookToLibrary() {
+  myLibrary.push(newBook.info());
 }
 
 function displayBookInLibrary() {
-  printBookDetails();
-  addRemoveButton();
+  const latestBookToDisplay = document.createElement("li");
+  latestBookToDisplay.textContent = `${myLibrary[myLibrary.length - 1]}`;
+  libraryDisplayList.appendChild(latestBookToDisplay);
 }
 
-formSubmitButton.addEventListener("click", updateLibrary);
+function submitForm(event) {
+  event.preventDefault();
+  makeBook();
+  addBookToLibrary();
+  displayBookInLibrary();
+  hideDefaultDisplay();
+  toggleInputsContainer();
+}
+
+formSubmitButton.addEventListener("click", submitForm);

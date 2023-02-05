@@ -1,21 +1,114 @@
 * {
     box-sizing: border-box;
-}
-
-.new-book__button {
-    display: block;
-    width: 50%;
-    margin: 0.5rem auto;
-    font-size: 1rem;
-}
-
-
-form {
+  }
+  
+  body {
+    margin: 0;
+  }
+  
+  #backdrop {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: #000000cc;
+    cursor: pointer;
+    z-index: 3;
     display: none;
-    margin: 0.5rem;
+  }
+  
+  #backdrop.visible {
+    display: block;
+  }
+  
+  #newbook-start-add {
+    margin: 0.5rem 0.1rem;
+    background: #e09d21;
+    border-radius: 0.5rem;
+    border: none;
+    padding: 0.5rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  
+  .library-display__default {
     text-align: center;
-}
-
-.text-container {
-    margin: 0.5rem;
-}
+  }
+  
+  .library-display__default.invisible {
+    display: none;
+  }
+  
+  #inputs-container {
+    display: none;
+    flex-direction: column;
+    border-radius: 0.5rem;
+    border: none;
+    position: fixed;
+    padding: 1rem;
+    margin: 20%;
+    font-weight: bold;
+    z-index: 5;
+    background: white;
+  }
+  
+  #inputs-container.visible {
+    display: flex;
+  }
+  
+  #inputs-container input {
+    background: #e09d21;
+  }
+  
+  #library-form__actions {
+    display: flex;
+    margin: 0.3rem auto;
+  }
+  
+  #library-form__actions button {
+    margin: 0.1rem;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.4rem;
+    cursor: pointer;
+  }
+  
+  #form-cancel-button {
+    background: white;
+    color: #0000ff;
+  }
+  
+  #form-cancel-button:hover {
+    background: #9c9cf5;
+  }
+  
+  #form-submit__button {
+    background: green;
+    color: black;
+    font-weight: 600;
+  }
+  
+  #form-submit__button:hover {
+    background: #73ec73;
+  }
+  
+  #newbook-start-add:hover {
+    color: #e09d21;
+    background: black;
+  }
+  
+  .main-header {
+    background: green;
+    color: white;
+    margin: 0;
+    padding: 2rem;
+  }
+  
+  #library-display__list {
+    padding-left: 1.25rem;
+  }
+  
+  li {
+    text-decoration: none;
+    text-align: start;
+  }
+  
