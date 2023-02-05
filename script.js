@@ -76,8 +76,7 @@ function displayBookInLibrary() {
   libraryDisplayList.appendChild(latestBookToDisplay);
 }
 
-function submitForm(event) {
-  event.preventDefault();
+function submitForm() {
   makeBook();
   addBookToLibrary();
   displayBookInLibrary();

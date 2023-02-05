@@ -50,6 +50,11 @@
     z-index: 5;
     background: white;
   }
+
+  .non-radio-inputs {
+    display: flex;
+    flex-direction: column;
+  }
   
   #inputs-container.visible {
     display: flex;
