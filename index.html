@@ -9,25 +9,26 @@
     <script src="script.js" defer></script>
   </head>
   <body>
+    <button type="button" class="new-book__button">New Book</button>
     <form action="">
-        <button type="button">New Book</button>
-          <div class="text-container">
-            <label for="title">*Title: </label>
-            <input type="text" id="book-title" name="book-title"/>
-          </div>
-          <div class="text-container">
-            <label for="author">*Author: </label>
-            <input type="text" id="book-author" name="book-author"/>
-          </div>
-          <div class="text-container">
-            <label for="pages">*Pages: </label>
-            <input type="text" id="book-pages" name="book-pages"/>
-          </div>
-          <div class="text-container">
-            <label for="book-read">*Read?: </label>
-            <input type="text" id="book-read" name="book-read"/>
-          </div>
-          <button type="button" id="form-submit__button">Add Book</button>
+      <div class="text-container">
+        <label for="title">*Title: </label>
+        <input type="text" id="book-title" name="book-title" />
+      </div>
+      <div class="text-container">
+        <label for="author">*Author: </label>
+        <input type="text" id="book-author" name="book-auth" />
+      </div>
+      <div class="text-container">
+        <label for="pages">*Pages: </label>
+        <input type="text" id="book-pages" name="book-pages" />
+      </div>
+      <div class="text-container">
+        <label for="book-read">*Read?: </label>
+        <input type="checkbox" id="book-read" name="book-read" />
+      </div>
+      <button type="submit" id="form-submit__button">Add Book</button>
     </form>
+    <div class="display-container">Books will display below: </div>
   </body>
 </html>

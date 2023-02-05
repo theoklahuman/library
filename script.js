@@ -1,48 +1,79 @@
 let myLibrary = [];
 const form = document.querySelector("form");
 const formSubmitButton = document.querySelector("#form-submit__button");
-let bookName = document.getElementById("book-title").value;
+const displayContainer = document.querySelector(".display-container");
+const newBookButton = document.querySelector(".new-book__button");
+let bookName = document.getElementById("book-title");
 let bookAuthor = document.getElementById("book-author");
-let bookPages = document.getElementById("book-pages").value;
+let bookPages = document.getElementById("book-pages");
+let bookRead = document.getElementById("book-read");
+let title = bookName.value;
+let author = bookAuthor.value;
+let pages = bookPages.value;
+let read = bookRead.value;
+let newBook;
 
-
-
-function Book(title, author, pages, read) {
-  (this.title = title),
-    (this.author = author),
-    (this.pages = pages),
-    (this.read = read);
-}
-
-Book.prototype.info = function () {
-  return `${this.title} by ${this.author}, ${this.pages} pages, ${this.read}`;
-};
-
-function addBookToLibrary(book) {
-  myLibrary.push(book.info());
-  console.log(myLibrary);
-}
-
-function displayBookInLibrary() {
-  for (books of myLibrary) {
-    console.log(books); 
+function toggleForm() {
+  if (form.style.display === "block") {
+    form.style.display = "none";
+  } else {
+    form.style.display = "block";
   }
 }
 
-function clicked(event) {
-  console.log(bookAuthor.name);
+newBookButton.addEventListener("click", toggleForm);
+
+const Book = (title, author, pages, read) => {
+  const info = () => {
+    return `"${title}" by "${author}", ${pages} pages, ${read}`;
+  };
+  return {title, author, pages, read, info};
+};
+
+function makeBook() {
+  newBook = Book(title, author, pages, read);
+  return newBook;
+}
+
+function getUserInput() {
+  title = bookName.value;
+  author = bookAuthor.value;
+  pages = bookPages.value;
+  read = bookRead.value;
+}
+
+function addBookToLibrary(book) {
+  myLibrary.push(book.info());
+}
+
+function updateLibrary(event) {
+  getUserInput();
+  makeBook();
+  addBookToLibrary(newBook);
+  displayBookInLibrary();
+  toggleForm();
   event.preventDefault();
 }
 
-formSubmitButton.addEventListener("click", clicked);
+function addRemoveButton() {
+  let removeButton = document.createElement("button");
+  let removeButtonText = document.createTextNode("Remove");
+  removeButton.appendChild(removeButtonText);
+  displayContainer.appendChild(removeButton);
+}
 
-displayBookInLibrary();
+function printBookDetails() {
+  let bookEntry;
+  bookEntry = myLibrary[myLibrary.length - 1];
+  const newBookEntry = document.createElement("h5");
+  const node = document.createTextNode(bookEntry);
+  newBookEntry.appendChild(node);
+  displayContainer.appendChild(newBookEntry);
+}
 
+function displayBookInLibrary() {
+  printBookDetails();
+  addRemoveButton();
+}
 
-
-// function makeBook() {
-//   Book()
-// }
-
-const book1 = new Book("Harry Potter", "J.K. Rowlings", 150, "read");
-const book2 = new Book("The Hobbit", "J.R.R. Tolkien", 295, "not yet read");
+formSubmitButton.addEventListener("click", updateLibrary);
