@@ -14,6 +14,7 @@ const nonRadioInputs = inputsContainer.querySelectorAll(
 );
 let myLibrary = [];
 let newBook;
+let bookPositionInLibrary;
 
 const toggleBackdrop = function () {
   backdrop.classList.toggle("visible");
@@ -40,11 +41,12 @@ addNewBookButton.addEventListener("click", toggleInputsContainer);
 backdrop.addEventListener("click", toggleInputsContainer);
 formCancelButton.addEventListener("click", toggleInputsContainer);
 
-function Book(title, author, pages, read) {
+function Book(id, title, author, pages, read) {
   const info = () => {
     return `${title} by ${author}, ${pages} pages, ${read}`;
   };
   return {
+    id,
     title,
     author,
     pages,
@@ -54,11 +56,13 @@ function Book(title, author, pages, read) {
 }
 
 function makeBook() {
+  const id = Math.random().toString();
   const bookTitleValue = bookName.value;
   const bookPagesValue = bookPages.value;
   const bookAuthorValue = bookAuthor.value;
   const bookReadValue = bookRead.value;
   newBook = Book(
+    id,
     bookTitleValue,
     bookAuthorValue,
     bookPagesValue,
@@ -70,10 +74,31 @@ function addBookToLibrary() {
   myLibrary.push(newBook.info());
 }
 
+const deleteBook = function (bookIndex) {
+  myLibrary.splice(bookIndex, 1);
+  displayBookInLibrary();
+};
+
 function displayBookInLibrary() {
-  const latestBookToDisplay = document.createElement("li");
-  latestBookToDisplay.textContent = `${myLibrary[myLibrary.length - 1]}`;
-  libraryDisplayList.appendChild(latestBookToDisplay);
+  let bookToBeDisplayed;
+  libraryDisplayList.innerHTML = "";
+  for (const books of myLibrary) {
+    const removeButtonOnDisplay = document.createElement("button");
+    bookToBeDisplayed = books;
+    bookPositionInLibrary = myLibrary.indexOf(books);
+    removeButtonOnDisplay.className = "display-button";
+    removeButtonOnDisplay.textContent = `Remove Book`;
+    const latestBookToDisplay = document.createElement("li");
+    latestBookToDisplay.innerHTML = `
+  <div>"${bookToBeDisplayed}"</div>
+  `;
+    latestBookToDisplay.appendChild(removeButtonOnDisplay);
+    removeButtonOnDisplay.addEventListener(
+      "click",
+      deleteBook.bind(null, bookPositionInLibrary)
+    );
+    libraryDisplayList.appendChild(latestBookToDisplay);
+  }
 }
 
 function submitForm() {

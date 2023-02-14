@@ -96,9 +96,11 @@
     background: #73ec73;
   }
   
-  #newbook-start-add:hover {
+  #newbook-start-add:hover,
+  .display-button {
     color: #e09d21;
     background: black;
+    border: none;
   }
   
   .main-header {
@@ -115,5 +117,11 @@
   li {
     text-decoration: none;
     text-align: start;
+  }
+
+  .display-button:hover {
+    background: #e09d21;
+    color: black;
+    border: none;
   }
   
