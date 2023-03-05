@@ -41,12 +41,11 @@ addNewBookButton.addEventListener("click", toggleInputsContainer);
 backdrop.addEventListener("click", toggleInputsContainer);
 formCancelButton.addEventListener("click", toggleInputsContainer);
 
-function Book(id, title, author, pages, read) {
+function Book(title, author, pages, read) {
   const info = () => {
     return `${title} by ${author}, ${pages} pages, ${read}`;
   };
   return {
-    id,
     title,
     author,
     pages,
@@ -56,13 +55,11 @@ function Book(id, title, author, pages, read) {
 }
 
 function makeBook() {
-  const id = Math.random().toString();
   const bookTitleValue = bookName.value;
   const bookPagesValue = bookPages.value;
   const bookAuthorValue = bookAuthor.value;
   const bookReadValue = bookRead.value;
   newBook = Book(
-    id,
     bookTitleValue,
     bookAuthorValue,
     bookPagesValue,
