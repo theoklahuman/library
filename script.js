@@ -41,16 +41,16 @@ addNewBookButton.addEventListener("click", toggleInputsContainer);
 backdrop.addEventListener("click", toggleInputsContainer);
 formCancelButton.addEventListener("click", toggleInputsContainer);
 
-function Book(title, author, pages, read) {
-  const info = () => {
-    return `${title} by ${author}, ${pages} pages, ${read}`;
-  };
-  return {
-    title,
-    author,
-    pages,
-    read,
-    info,
+class Book {
+  constructor(title, author, pages, read) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.read = read;
+  }
+
+  info = () => {
+    return `${this.title} by ${this.author}, ${this.pages} pages, ${this.read}`;
   };
 }
 
@@ -59,7 +59,7 @@ function makeBook() {
   const bookPagesValue = bookPages.value;
   const bookAuthorValue = bookAuthor.value;
   const bookReadValue = bookRead.value;
-  newBook = Book(
+  newBook = new Book(
     bookTitleValue,
     bookAuthorValue,
     bookPagesValue,
